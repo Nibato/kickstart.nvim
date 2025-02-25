@@ -134,6 +134,9 @@ vim.opt.undodir = vim.fn.expand("~") .. "/.vim/undodir"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- Don't make a backup file
+vim.opt.backup = false
+
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
