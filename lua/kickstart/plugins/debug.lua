@@ -81,6 +81,13 @@ return {
       end,
       desc = 'Debug: Set Breakpoint',
     },
+    {
+      '<leader><C-b>',
+      function()
+        require('dap').clear_breakpoints()
+      end,
+      desc = 'Debug: Clear Breakpoints',
+    },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     {
       '<F7>',
