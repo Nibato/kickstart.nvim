@@ -23,6 +23,12 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    {
+      'mfussenegger/nvim-dap-python', 
+      config = function()
+        require("dap-python").setup("python")
+      end,
+    }
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -54,6 +60,13 @@ return {
       end,
       desc = 'Debug: Step Out',
     },
+    {
+      '<F12>',
+      function()
+        require('dap').stop()
+      end,
+      desc = 'Debug: Stop',
+    },    
     {
       '<leader>b',
       function()
