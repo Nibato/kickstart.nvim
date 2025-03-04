@@ -24,11 +24,11 @@ return {
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
     {
-      'mfussenegger/nvim-dap-python', 
+      'mfussenegger/nvim-dap-python',
       config = function()
-        require("dap-python").setup("python")
+        require('dap-python').setup 'python'
       end,
-    }
+    },
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -66,7 +66,7 @@ return {
         require('dap').stop()
       end,
       desc = 'Debug: Stop',
-    },    
+    },
     {
       '<leader>b',
       function()
@@ -115,6 +115,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'php-debug-adapter',
       },
     }
 
@@ -165,20 +166,72 @@ return {
       },
     }
 
+    -- php
+
+    local php_default_config = {
+      type = 'php',
+      request = 'launch',
+      name = 'Listen for Xdebug',
+      port = 9003,
+    }
+
+    dap.adapters.php = {
+      type = 'executable',
+      command = 'node',
+      args = { 'php-debug-adapter' },
+    }
+
+    dap.configurations.php = { php_default_config }
+
+    local debug_augroup = vim.api.nvim_create_augroup('debug', { clear = true })
+    vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter' }, {
+      group = debug_augroup,
+      callback = function()
+        dap.configurations.php = { php_default_config }
+
+        local path = vim.fs.joinpath(vim.fn.getcwd(), '.vscode', 'launch.json')
+        if vim.fn.filereadable(path) == 0 then
+          return
+        end
+
+        local file = io.open(path, 'r')
+        if not file then
+          return
+        end
+
+        local content = file:read '*a'
+        file:close()
+
+        -- content = content:gsub('%${workspaceRoot}', vim.fn.getcwd())
+
+        local launch = require('jsonc').decode(content, { luanil = { object = true, array = true } })
+        local configs = {}
+        for _, config in ipairs(launch.configurations) do
+          if config.type == 'php' then
+            table.insert(configs, config)
+          end
+        end
+
+        if #configs > 0 then
+          print('Added ' .. #configs .. ' PHP configurations to DAP')
+          dap.configurations.php = configs
+        end
+      end,
+    })
     -- Godot
     dap.adapters.godot = {
-      type = "server",
+      type = 'server',
       host = '127.0.0.1',
       port = 6006,
     }
 
     dap.configurations.gdscript = {
       {
-        type = "godot",
-        request = "launch",
-        name = "Launch scene",
-        project = "${workspaceFolder}",
-      } 
+        type = 'godot',
+        request = 'launch',
+        name = 'Launch scene',
+        project = '${workspaceFolder}',
+      },
     }
   end,
 }
