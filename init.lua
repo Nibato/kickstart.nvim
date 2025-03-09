@@ -131,7 +131,7 @@ vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
-vim.opt.undodir = vim.fn.expand("~") .. "/.vim/undodir"
+vim.opt.undodir = vim.fn.expand '~' .. '/.vim/undodir'
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -772,29 +772,29 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         gdscript = { 'gdformat' },
-        php = { "php" },        
-        javascript = { "prettier" },
-        typescript = { "prettier" },
+        php = { 'php' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        python = { 'black' },
 
-        
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
-      formatters = { 
-        php = { 
-            command = "vendor/bin/php-cs-fixer", 
-            args = { 
-                "fix", 
-                "$FILENAME",
-                "--config=.php-cs-fixer.php",
-                "--allow-risky=no", -- if you have risky stuff in config, if not you dont need it.
-            }, 
-            stdin = false,
-        }
-      }
+      formatters = {
+        php = {
+          command = 'vendor/bin/php-cs-fixer',
+          args = {
+            'fix',
+            '$FILENAME',
+            '--config=.php-cs-fixer.php',
+            '--allow-risky=no', -- if you have risky stuff in config, if not you dont need it.
+          },
+          stdin = false,
+        },
+      },
     },
   },
 
@@ -999,10 +999,10 @@ require('lazy').setup({
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "gnn",
-          node_incremental = "grn",
-          scope_incremental = "grc",
-          node_decremental = "grm",
+          init_selection = 'gnn',
+          node_incremental = 'grn',
+          scope_incremental = 'grc',
+          node_decremental = 'grm',
         },
       },
     },
@@ -1014,7 +1014,7 @@ require('lazy').setup({
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
   {
-    "nvim-treesitter/nvim-treesitter-context",
+    'nvim-treesitter/nvim-treesitter-context',
   },
   -- {
   --   "nvim-treesitter/nvim-treesitter-textobjects",
