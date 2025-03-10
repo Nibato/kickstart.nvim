@@ -137,6 +137,9 @@ vim.opt.undodir = vim.fn.expand '~' .. '/.vim/undodir'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- disable wordwrap
+vim.opt.wrap = false
+
 -- Don't make a backup file
 vim.opt.backup = false
 
