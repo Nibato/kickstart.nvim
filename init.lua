@@ -668,6 +668,13 @@ require('lazy').setup({
 
       require('lspconfig').gdscript.setup(capabilities)
 
+      local get_intelephense_license = function()
+        local f = assert(io.open((vim.fn.stdpath 'config') .. '/../intelephense/license.txt', 'rb'))
+        local content = f:read '*a'
+        f:close()
+        return string.gsub(content, '%s+', '')
+      end
+
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -682,6 +689,12 @@ require('lazy').setup({
         -- gopls = {},
         basedpyright = {},
         bashls = {},
+        intelephense = {
+          init_options = {
+            globalStoragePath = (vim.fn.stdpath 'config') .. '/../intelephense',
+            licenceKey = get_intelephense_license(),
+          },
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
