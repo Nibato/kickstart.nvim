@@ -116,6 +116,7 @@ return {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
         'php-debug-adapter',
+        'chrome-debug-adapter',
       },
     }
 
@@ -177,11 +178,15 @@ return {
 
     dap.adapters.php = {
       type = 'executable',
-      command = 'node',
-      args = { 'php-debug-adapter' },
+      command = 'php-debug-adapter',
     }
 
     dap.configurations.php = { php_default_config }
+
+    dap.adapters.chrome = {
+      type = 'executable',
+      command = 'chrome-debug-adapter',
+    }
 
     local debug_augroup = vim.api.nvim_create_augroup('debug', { clear = true })
     vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter' }, {
@@ -205,16 +210,23 @@ return {
         -- content = content:gsub('%${workspaceRoot}', vim.fn.getcwd())
 
         local launch = require('jsonc').decode(content, { luanil = { object = true, array = true } })
-        local configs = {}
+
+        local configs = {
+          php = {},
+          chrome = {},
+        }
+
         for _, config in ipairs(launch.configurations) do
-          if config.type == 'php' then
-            table.insert(configs, config)
+          if config.type ~= nil and configs[config.type] ~= nil then
+            table.insert(configs[config.type], config)
           end
         end
 
-        if #configs > 0 then
-          print('Added ' .. #configs .. ' PHP configurations to DAP')
-          dap.configurations.php = configs
+        for dtype, dconfigs in pairs(configs) do
+          if #dconfigs > 0 then
+            print('Added ' .. #dconfigs .. ' ' .. dtype .. ' configurations to DAP')
+            dap.configurations[dtype] = dconfigs
+          end
         end
       end,
     })
