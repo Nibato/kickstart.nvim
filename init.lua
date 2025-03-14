@@ -121,6 +121,19 @@ vim.opt.showmode = false
 --   vim.opt.clipboard = 'unnamedplus'
 -- end)
 
+-- Use OSC 52 clipboard by default
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+    ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste '+',
+    ['*'] = require('vim.ui.clipboard.osc52').paste '*',
+  },
+}
+
 -- default tab preferences
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -669,7 +682,14 @@ require('lazy').setup({
       require('lspconfig').gdscript.setup(capabilities)
 
       local get_intelephense_license = function()
-        local f = assert(io.open((vim.fn.stdpath 'config') .. '/../intelephense/license.txt', 'rb'))
+        local path = (vim.fn.stdpath 'config') .. '/../intelephense/license.txt', 'rb'
+        local f, err = io.open(path)
+
+        if f == nil then
+          print("Error opening '" .. path .. "': " .. err)
+          return nil
+        end
+
         local content = f:read '*a'
         f:close()
         return string.gsub(content, '%s+', '')
