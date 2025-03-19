@@ -220,9 +220,14 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- For switching buffers
 vim.keymap.set('n', 'H', '<cmd>bp<CR>', { desc = 'Switch to prev buffer' })
 vim.keymap.set('n', 'L', '<cmd>bn<CR>', { desc = 'Switch to next buffer' })
---
+
+-- Center cursor on C-u and C-d
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
