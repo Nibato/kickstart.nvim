@@ -224,9 +224,12 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', 'H', '<cmd>bp<CR>', { desc = 'Switch to prev buffer' })
 vim.keymap.set('n', 'L', '<cmd>bn<CR>', { desc = 'Switch to next buffer' })
 
--- Center cursor on C-u and C-d
+-- Center cursor on C-u and C-d and searching
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down' })
+
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Prev search result' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
