@@ -231,6 +231,9 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down' })
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result' })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Prev search result' })
 
+-- Paste without swapping text
+vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'Delete into _ & Paste' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
