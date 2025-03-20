@@ -234,6 +234,11 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Prev search result' })
 -- Paste without swapping text
 vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'Delete into _ & Paste' })
 
+-- Yank/paste to system clipboard
+vim.keymap.set({ 'n', 'x' }, '<leader>v', '"+p', { desc = 'Paste after cursor from clipboard' })
+vim.keymap.set({ 'n', 'x' }, '<leader>V', '"+P', { desc = 'Paste before cursor from clipboard' })
+vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
