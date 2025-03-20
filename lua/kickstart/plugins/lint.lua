@@ -9,9 +9,6 @@ return {
       --   markdown = { 'markdownlint' },
       -- }
 
-
-      
-
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
       lint.linters_by_ft = lint.linters_by_ft or {}
@@ -23,13 +20,13 @@ return {
       do
         local efm = '%f:%l: Error: %m'
 
-        lint.linters.gdlint = { 
+        lint.linters.gdlint = {
           cmd = 'gdlint',
           stdin = false,
           args = {},
           stream = 'both',
           ignore_exitcode = true,
-          parser = require('lint.parser').from_errorformat(efm, { source = "gd" }),
+          parser = require('lint.parser').from_errorformat(efm, { source = 'gd' }),
         }
       end
       lint.linters_by_ft['gdscript'] = { 'gdlint' }
@@ -60,8 +57,7 @@ return {
       lint.linters_by_ft['ruby'] = nil
       lint.linters_by_ft['terraform'] = nil
       lint.linters_by_ft['text'] = nil
-      lint.linters_by_ft['php'] = { 'phpstan' }
-
+      -- lint.linters_by_ft['php'] = { 'phpstan' }
 
       -- Create autocommand which carries out the actual linting
       -- on the specified events.
